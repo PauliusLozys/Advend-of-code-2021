@@ -11,15 +11,14 @@ namespace AdventOfCode2021.Days
     {
         public static void PartOne()
         {
-            var lines = File.ReadAllLines("../../../Days/Input1.txt");
+            var lines = File.ReadAllLines("../../../Days/Input1.txt").Select(x => int.Parse(x)).ToArray();
 
             int increaseCount = 0;
 
-            int currentNumber = int.Parse(lines[0]);
-
+            int currentNumber = lines[0];
             foreach (var line in lines[1..])
             {
-                var current = int.Parse(line);
+                var current = line;
 
                 if (current > currentNumber)
                     increaseCount++;
@@ -32,14 +31,14 @@ namespace AdventOfCode2021.Days
 
         public static void PartTwo()
         {
-            var lines = File.ReadAllLines("../../../Days/Input1.txt");
+            var lines = File.ReadAllLines("../../../Days/Input1.txt").Select(x => int.Parse(x)).ToArray();
 
             int increaseCount = 0;
             int currentNumber = 0;
 
             for (int j = 0; j < 3; j++)
             {
-                var value = int.Parse(lines[j]);
+                var value = lines[j];
                 currentNumber += value;
             }
 
@@ -48,7 +47,7 @@ namespace AdventOfCode2021.Days
                 int sum = 0;
                 for (int j = i; j < (i + 3) && j < lines.Length; j++)
                 {
-                    var value = int.Parse(lines[j]);
+                    var value = lines[j];
                     sum += value;
                 }
 

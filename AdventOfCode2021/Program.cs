@@ -1,5 +1,6 @@
 ﻿using AdventOfCode2021.Days;
 using System;
+using System.Diagnostics;
 
 namespace AdventOfCode2021
 {
@@ -7,8 +8,13 @@ namespace AdventOfCode2021
     {
         static void Main(string[] args)
         {
-            //Day1.PartOne();
+            Stopwatch t = new();
+            t.Start();
+            Day1.PartOne();
             Day1.PartTwo();
+
+            t.Stop();
+            Console.WriteLine($"Time taken: {t.Elapsed}");
         }
     }
 }
