@@ -1,59 +1,40 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace AdventOfCode2021.Days
 {
-    class Day1
+    class Day1 : AdventOfCode
     {
-        public static void PartOne()
+        private readonly int[] _input = File.ReadAllLines("../../../Inputs/Input1.txt").Select(x => int.Parse(x)).ToArray();
+
+        public override void PartOne()
         {
-            var lines = File.ReadAllLines("../../../Days/Input1.txt").Select(x => int.Parse(x)).ToArray();
-
             int increaseCount = 0;
+            int currentNumber = _input[0];
 
-            int currentNumber = lines[0];
-            foreach (var line in lines[1..])
+            foreach (var line in _input[1..])
             {
-                var current = line;
-
-                if (current > currentNumber)
+                if (line > currentNumber)
                     increaseCount++;
 
-                currentNumber = current;
+                currentNumber = line;
             }
 
             Console.WriteLine($"Part 1: depth increased {increaseCount} times");
         }
 
-        public static void PartTwo()
+        public override void PartTwo()
         {
-            var lines = File.ReadAllLines("../../../Days/Input1.txt").Select(x => int.Parse(x)).ToArray();
-
             int increaseCount = 0;
-            int currentNumber = 0;
+            int currentNumber = _input[0..3].Sum();
 
-            for (int j = 0; j < 3; j++)
+            for (int i = 1; i < _input.Length; i++)
             {
-                var value = lines[j];
-                currentNumber += value;
-            }
-
-            for (int i = 1; i < lines.Length; i++)
-            {
-                int sum = 0;
-                for (int j = i; j < (i + 3) && j < lines.Length; j++)
-                {
-                    var value = lines[j];
-                    sum += value;
-                }
+                int sum = i + 3 < _input.Length ? _input[i..(i + 3)].Sum() : _input[i..].Sum();
 
                 if (sum > currentNumber)
                     increaseCount++;
-
                 currentNumber = sum;
             }
 
