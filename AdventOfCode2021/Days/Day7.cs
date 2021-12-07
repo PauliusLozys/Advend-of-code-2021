@@ -18,7 +18,11 @@ namespace AdventOfCode2021.Days
             int minFuel = int.MaxValue;
             for (int i = min; i <= max; i++)
             {
-                minFuel = Math.Min(minFuel, CalculateFuelCostForPositionPartOne(i));
+                var cost = CalculateFuelCostForPositionPartOne(i);
+                if (cost > minFuel)
+                    break;
+
+                minFuel = cost;
             }
 
             Console.WriteLine($"Part 1: {minFuel}");
@@ -31,7 +35,11 @@ namespace AdventOfCode2021.Days
             int minFuel = int.MaxValue;
             for (int i = min; i <= max; i++)
             {
-                minFuel = Math.Min(minFuel, CalculateFuelCostForPositionPartTwo(i));
+                var cost = CalculateFuelCostForPositionPartTwo(i);
+                if (cost > minFuel)
+                    break;
+
+                minFuel = cost;
             }
 
             Console.WriteLine($"Part 2: {minFuel}");
