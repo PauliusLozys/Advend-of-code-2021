@@ -10,7 +10,7 @@ namespace AdventOfCode2021
         {
             Stopwatch t = new();
             t.Start();
-            AdventOfCode day = new Day8();
+            AdventOfCode day = new Day9();
             day.Solve();
             t.Stop();
             Console.WriteLine($"Time taken: {t.Elapsed}");
