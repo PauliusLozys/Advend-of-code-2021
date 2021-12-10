@@ -11,7 +11,6 @@ namespace AdventOfCode2021.Days
     {
         private readonly string[] _input = File.ReadAllLines("../../../Inputs/Input10.txt");
         private readonly Dictionary<char, int> lookup = new();
-        private readonly Dictionary<char, int> lookupPart2 = new();
 
         public Day10()
         {
@@ -19,11 +18,10 @@ namespace AdventOfCode2021.Days
             lookup.Add(']', 57);
             lookup.Add('}', 1197);
             lookup.Add('>', 25137);
-
-            lookupPart2.Add(')', 1);
-            lookupPart2.Add(']', 2);
-            lookupPart2.Add('}', 3);
-            lookupPart2.Add('>', 4);
+            lookup.Add('(', 1);
+            lookup.Add('[', 2);
+            lookup.Add('{', 3);
+            lookup.Add('<', 4);
         }
         public override void PartOne()
         {
@@ -48,40 +46,6 @@ namespace AdventOfCode2021.Days
                 }
             }
             Console.WriteLine($"Part 1: {sum}");
-        }
-
-        private bool Match(char op, char cl)
-        {
-            return op switch
-            {
-                '(' => cl == ')',
-                '[' => cl == ']',
-                '{' => cl == '}',
-                '<' => cl == '>',
-                _ => false,
-            };
-        }
-        private bool IsClosing(char c)
-        {
-            return c switch
-            {
-                ')' => true,
-                ']' => true,
-                '}' => true,
-                '>' => true,
-                _ => false,
-            };
-        }
-        private char ReturnClosing(char c)
-        {
-            return c switch
-            {
-                '(' => ')',
-                '[' => ']',
-                '{' => '}',
-                '<' => '>',
-                _ => ' '
-            };
         }
         public override void PartTwo()
         {
@@ -110,7 +74,7 @@ namespace AdventOfCode2021.Days
                     long current = 0;
                     foreach (var item in stack)
                     {
-                        current = current * 5 + lookupPart2[ReturnClosing(item)];
+                        current = current * 5 + lookup[item];
                     }
 
                     sums.Add(current);
@@ -120,6 +84,28 @@ namespace AdventOfCode2021.Days
             var ordered = sums.OrderBy(x => x).ToArray();
 
             Console.WriteLine($"Part 2: {ordered[ordered.Length / 2]}");
+        }
+        private bool Match(char op, char cl)
+        {
+            return op switch
+            {
+                '(' => cl == ')',
+                '[' => cl == ']',
+                '{' => cl == '}',
+                '<' => cl == '>',
+                _ => false,
+            };
+        }
+        private bool IsClosing(char c)
+        {
+            return c switch
+            {
+                ')' => true,
+                ']' => true,
+                '}' => true,
+                '>' => true,
+                _ => false,
+            };
         }
     }
 }
