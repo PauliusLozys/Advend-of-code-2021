@@ -26,6 +26,7 @@ namespace AdventOfCode2021.Days
 
         public override void PartOne()
         {
+            // Brute force approach
             var copy = startingFormula.ToString();
             for (int steps = 0; steps < 10; steps++)
             {
@@ -41,7 +42,6 @@ namespace AdventOfCode2021.Days
                 }
                 newFormula.Append(copy[^1]);
                 copy = newFormula.ToString();
-                //Console.WriteLine($"Step {steps+1}: {startingFormula} {startingFormula.Length}");
             }
 
             // Count
@@ -59,16 +59,14 @@ namespace AdventOfCode2021.Days
             }
             int min = count.Min(x => x.Value);
             int max = count.Max(x => x.Value);
-            Console.WriteLine($"Part 1 {max - min}");
+            Console.WriteLine($"Part 1: {max - min}");
         }
-
         public override void PartTwo()
         {
-            var copy = startingFormula.ToString();
-
+            // Counting pairs approach
             for (int i = 0; i < startingFormula.Length-1; i++)
             {
-                var pair = $"{copy[i]}{copy[i + 1]}";
+                var pair = $"{startingFormula[i]}{startingFormula[i + 1]}";
                 if (!pairCount.ContainsKey(pair))
                     pairCount.Add(pair, 1);
                 else
@@ -81,6 +79,7 @@ namespace AdventOfCode2021.Days
 
                 foreach (var pp in pairCount)
                 {
+                    // Split pair into two new pairs
                     var exp = pairs[pp.Key];
                     var pair1 = $"{pp.Key[0]}{exp}";
                     var pair2 = $"{exp}{pp.Key[1]}";
@@ -98,7 +97,6 @@ namespace AdventOfCode2021.Days
                 pairCount = newPairs;
             }
 
-            // Count
             Dictionary<char, ulong> count = new();
             // Count all single chars
             foreach (var ch in pairCount)
@@ -127,7 +125,7 @@ namespace AdventOfCode2021.Days
 
             var min = count.Min(x => x.Value);
             var max = count.Max(x => x.Value);
-            Console.WriteLine($"Part 1 {max - min}");
+            Console.WriteLine($"Part 2: {max - min}");
         }
     }
 }
