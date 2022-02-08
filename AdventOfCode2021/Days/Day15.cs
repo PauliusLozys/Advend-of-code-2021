@@ -7,22 +7,6 @@ using System.Threading.Tasks;
 
 namespace AdventOfCode2021.Days
 {
-    class PriorityQueue
-    {
-        private List<(int, int, int)> queue = new();
-        public int Count { get => queue.Count; }
-        public void Push((int, int, int) cell)
-        {
-            queue.Add(cell);
-            queue = queue.OrderBy(x => x.Item3).ToList();
-        }
-        public (int y, int x, int value) Pop()
-        {
-            var val = queue[0];
-            queue.RemoveAt(0);
-            return val;
-        }
-    }
     class Day15 : AdventOfCode
     {
         private readonly int[][] _grid = File.ReadAllLines("../../../Inputs/Input15.txt")
@@ -41,14 +25,14 @@ namespace AdventOfCode2021.Days
         }
         private void CostPathFind(int [][] grid, string partName)
         {
-            PriorityQueue pq = new();
+            PriorityQueue<(int y, int x, int value), int> pq = new();
             HashSet<(int y, int x)> visited = new();
 
-            pq.Push((0, 0, 0));
+            pq.Enqueue((0, 0, 0), 0);
 
             while (pq.Count > 0)
             {
-                var item = pq.Pop();
+                var item = pq.Dequeue();
                 if (visited.Contains((item.y, item.x)) || IsInNotBounds(grid, item.y, item.x))
                     continue;
 
@@ -60,16 +44,16 @@ namespace AdventOfCode2021.Days
 
                 // Add all 4 sides
                 if (!IsInNotBounds(grid, item.y + 1, item.x))
-                    pq.Push((item.y + 1, item.x, grid[item.y + 1][item.x] + item.value)); // down
+                    pq.Enqueue((item.y + 1, item.x, grid[item.y + 1][item.x] + item.value), grid[item.y + 1][item.x] + item.value); // down
 
                 if (!IsInNotBounds(grid, item.y - 1, item.x))
-                    pq.Push((item.y - 1, item.x, grid[item.y - 1][item.x] + item.value)); // up
+                    pq.Enqueue((item.y - 1, item.x, grid[item.y - 1][item.x] + item.value), grid[item.y - 1][item.x] + item.value); // up
 
                 if (!IsInNotBounds(grid, item.y, item.x + 1))
-                    pq.Push((item.y, item.x + 1, grid[item.y][item.x + 1] + item.value)); // right
+                    pq.Enqueue((item.y, item.x + 1, grid[item.y][item.x + 1] + item.value), grid[item.y][item.x + 1] + item.value); // right
 
                 if (!IsInNotBounds(grid, item.y, item.x - 1))
-                    pq.Push((item.y, item.x - 1, grid[item.y][item.x - 1] + item.value)); // left
+                    pq.Enqueue((item.y, item.x - 1, grid[item.y][item.x - 1] + item.value), grid[item.y][item.x - 1] + item.value); // left
 
                 visited.Add((item.y, item.x));
             }
